@@ -26,7 +26,6 @@ set_interface_attribs (int fd, int speed, int parity)
     tty.c_cflag |= CS8;
     tty.c_cflag &= ~PARENB;
     tty.c_iflag &= ~INPCK;
-    tty.c_iflag &= ~(IGNCR);
     tty.c_cflag &= ~CSTOPB;
     tty.c_iflag |= INPCK;
     tty.c_cc[VTIME] = 1;  //  1s=10   0.1s=1 *
