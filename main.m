@@ -79,8 +79,8 @@ int main(int argc, char * argv[]) {
         exit(-1);
     }
     
-    set_interface_attribs (1, B115200, 0);
-    set_interface_attribs (fd, B115200, 0);
+    assert(set_interface_attribs (fd, B115200, 0) == 0);
+    assert(set_interface_attribs (1, B115200, 0) == 0);
     set_blocking (fd,0);
     struct kevent ke;
     kq = kqueue();
