@@ -98,21 +98,23 @@ int main(int argc, char * argv[]) {
             continue;
         if (ke.ident == fd) {
             int r = read(fd, buf, 1024);
-            write(1, buf, r);
+            if (r > 0)
+	            write(1, buf, r);
+            else break;
         } else
             if (ke.ident == 0) {
                 int r = read(0, buf, 1);
-                if (buf[0] == 0x1d) {
-                    if (tcsetattr (1, TCSANOW, &tty) != 0)
-                    {
-                        return -1;
-                    }
-                    printf("\r\n[disconnected]\r\n");
-                    flock(fd, LOCK_UN);
-                    exit(0);
-                }
+	        if (!(r > 0)) break;
+                if (buf[0] == 0x1d) break;
                 write(fd, buf, r);
             }
     }
+    if (tcsetattr (1, TCSANOW, &tty) != 0)
+    {
+        return -1;
+    }
+    printf("\r\n[disconnected]\r\n");
+    flock(fd, LOCK_UN);
+    exit(0);
 }
 
