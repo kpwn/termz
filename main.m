@@ -70,7 +70,7 @@ int main(int argc, char * argv[]) {
     }
     
     const char *portname = argv[1];
-    int fd = open (portname, O_RDWR | O_NOCTTY | O_SYNC);
+    int fd = open (portname, O_RDWR | O_NOCTTY | O_SYNC | O_NONBLOCK);
     if (fd < 0)
         usage(argv[0]);
 
